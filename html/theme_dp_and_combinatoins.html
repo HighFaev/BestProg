@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BestProger</title>
+    <link rel="stylesheet" href="../css/stylies4.css">
+</head>
+<body>
+<div class="site-header">
+    <h1 class="glow-effect"><span>B</span><span>E</span><span>S</span><span>T</span><span>P</span><span>R</span><span>O</span><span>G</span><span>E</span><span>R</span></h1>
+    <a href="../index.html" class="floating-button">Новости</a>
+    <a href="thems.html" class="floating-button">Темы</a>
+    <a href="taska.html" class="floating-button">Архив Задач</a>
+</div>
+<div class="main-site" >
+    <div style="text-align: center"><h1 class="glow-effect"><span>Д</span><span>и</span><span>н</span><span>а</span><span>м</span><span>и</span><span>ч</span><span>е</span><span>с</span><span>к</span><span>о</span><span>е</span><span> </span><span>п</span><span>р</span><span>о</span><span>г</span><span>р</span><span>а</span><span>м</span><span>м</span><span>и</span><span>р</span><span>о</span><span>в</span><span>а</span><span>н</span><span>и</span><span>е</span><span> </span><span>и</span><span> </span><span>к</span><span>о</span><span>м</span><span>б</span><span>и</span><span>н</span><span>а</span><span>т</span><span>о</span><span>р</span><span>и</span><span>к</span><span>а</span></h1></div>
+</div>
+
+<div class="wrap">
+    <p style="font-size: 60px"><b>Динамическое программирование на примерах</b></p>
+    <p style="font-size: 48px">Определение</p>
+    <p>
+        Динамическое программирование - очень широкое понятие, под которое подходит множество алгоритмов, которым посвящены отдельные лекции. Формально, динамическое программирование - способ решения задач с помощью разбиения их на подзадачи и комбинирования ответов на них. Впрочем, для абсолютного большинства людей, не сталкивавшихся раньше с ДП, это определение ничего не объясняет. Попробуем изменить его так, чтобы оно стало немного понятнее, но всё ещё подходило под большинство примеров из олимпиадного программирования:
+
+        <br><br><b>Динамическое программирование - способ решения задачи с помощью выражения ответа в виде функции от ответов на ту же задачу для других входных данных.</b>
+
+        <br><br>Скорее всего, всё ещё непонятно. Гораздо эффективнее будет привести несколько примеров, начиная с самого элементарного.
+    </p>
+    <p style="font-size: 48px">Связь между ДП и рекурсией.<br>Последовательность Фибоначчи</p>
+    <p>
+        Если вы всё же что-то вынесли из приведённого выше определения, то могли заметить, насколько оно похоже на определение рекурсивной функции. На самом деле, ДП - это “всего лишь” способ решения задач на рекурсивные последовательности с сохранением ответа.
+
+        <br><br>Вспомним реализацию расчёта n-го числа Фибоначчи из лекции про рекурсию:
+        <div class="code-box">
+            <code>
+                <pre>
+<b>1.</b>int fib(int n) {
+<b>2.</b>    if (n <= 2) {
+<b>3.</b>        return 1;
+<b>4.</b>    }
+<b>5.</b>    else {
+<b>6.</b>        return fib(n - 1) + fib(n - 2);
+<b>7.</b>    }
+<b>8.</b>}
+                </pre>
+            </code>
+        </div>
+    <p>
+        Мы отмечали, что она не подходит для использования на практике из-за слишком высокой сложности. Откуда же берётся эта сложность? Просто рассмотрим дерево вызовов функции fib для n=6:
+        <br><br><img src="../img/fib_callgraph.png" alt="Ой ой" style="margin-left: auto">
+        <br>Как видите, для подсчёта fib(6) функцию fib пришлось вызвать 15 раз, хотя логично, что хватило бы шести. Вся проблема заключается в том, что для некоторых x функция fib(x) будет вызываться больше одного раза, и каждый раз высчитываться рекурсивно заново. Очевидно, что для оптимальной работы значения функции нужно сохранять для последующего использования. ДП - один из способов такой оптимизации.
+
+        <br><br>Приведём решение задачи о последовательности Фибоначчи с помощью ДП:
+    <div class="code-box">
+        <code>
+                <pre>
+<b>1.</b>#include &lt;bits/stdc++.h>
+<b>2.</b>
+<b>3.</b>using namespace std;
+<b>4.</b>
+<b>5.</b>int fib[100001];
+<b>6.</b>
+<b>7.</b>int main() {
+<b>8.</b>    int n;      //N <= 100000
+<b>9.</b>    cin >> n;
+<b>10.</b>
+<b>11.</b>    fib[1] = fib[2] = 1;    //начальные значения
+<b>12.</b>
+<b>13.</b>    for (int i = 3; i <= n; i++) {
+<b>14.</b>        fib[i] = fib[i - 1] + fib[i - 2];   //формула перехода
+<b>15.</b>    }
+<b>16.</b>
+<b>17.</b>    cout << fib[n];   //вычисление ответа
+<b>18.</b>}
+                </pre>
+        </code>
+    </div>
+    <p>
+    Идея проста: для вычисления fib(n) нам нужны значения fib(n−1) и fib(n−2). Давайте просто считать fib в порядке возрастания n, сохраняя результаты в массив.
+
+    <br><br>В большинстве случаев ДП характеризуется тремя главными параметрами:
+        <br><br><b>1.Начальные значения.</b> Аналогично крайним случаям в рекурсивных функциях.
+        <br><b>2.Формула перехода.</b> Описывает рекурсивную зависимость.
+        <br><b>3.Вычисление ответа.</b> В некоторых случаях ответ может быть не последним значением, а суммой или максимумом по значениям.
+    </p>
+    <p style="font-size: 48px">Путь в матрице</p>
+    <p>
+        Задачи на поиск оптимального пути в матрице, наверное, самые классические, после задач на последовательность Фибоначчи. В таких задачах каждой клетке в матрице присвоено некоторое число, и нужно найти путь между двумя клетками с максимальной или минимальной суммой.
+        <br><img src="../img/matrix_maxpath.png" alt="Ой ой">
+        <br>Приведём решение такой задачи. Будем искать путь между левой верхней и правой нижней клетками с максимальной суммой, если ходить можно только вниз или вправо. Для решения задачи используем следующее ДП: dp[i][j] - максимальная сумма, которую мы можем набрать, дойдя до клетки (i,j). Опишем ДП:
+
+        <br><br><b>Начальные значения:</b> dp[0][0]=c[0][0] (c - исходная матрица).
+        Мы находимся в клетке (0,0), значит мы ещё не двигались, то есть собранная нами сумма равна значению в этой клетке.
+
+        <br><br><b>Формула перехода:</b> dp[i][j]=max(dp[i−1][j],dp[i][j−1])+c[i][j]
+        Мы можем перейти в клетку (i,j) либо сверху, либо слева. Выгоднее перейти из той, в которую мы до этого пришли с большей суммой.
+
+        <br><br><b>Ответ:</b> dp[n−1][m−1].
+        <br><br>Реализация на C++:
+
+        <div class="code-box">
+            <code>
+                <pre>
+<b>1.</b> #include &lt;bits/stdc++.h>
+<b>2.</b>
+<b>3.</b> using namespace std;
+<b>4.</b>
+<b>5.</b> int c[1000][1000];
+<b>6.</b> int dp[1000][1000];
+<b>7.</b>
+<b>8.</b> int main() {
+<b>9.</b>     int n, m;
+<b>10.</b>     cin >> n >> m;
+<b>11.</b>
+<b>12.</b>     for (int i = 0; i < n; i++) {
+<b>13.</b>         for (int j = 0; j < m; j++) {
+<b>14.</b>             cin >> c[i][j];
+<b>15.</b>         }
+<b>16.</b>     }
+<b>17.</b>
+<b>18.</b>     dp[0][0] = c[0][0];
+<b>19.</b>
+<b>20.</b>     for (int i = 0; i < n; i++) {
+<b>21.</b>         for (int j = 0; j < m; j++) {
+<b>22.</b>             if (i || j) {   //цикл не должен заходить в клетку (0, 0)
+<b>23.</b>                 dp[i][j] = INT_MIN;     //код рассчёта максимума получился
+<b>24.</b>                                         //достаточно длинным из-за дополнительных
+<b>25.</b>                                         //проверок на выход за границы матрицы
+<b>26.</b>
+<b>27.</b>                 if (i - 1 >= 0) {
+<b>28.</b>                     dp[i][j] = max(dp[i][j], dp[i - 1][j] + c[i][j]);
+<b>29.</b>                 }
+<b>30.</b>
+<b>31.</b>                 if (j - 1 >= 0) {
+<b>32.</b>                     dp[i][j] = max(dp[i][j], dp[i][j - 1] + c[i][j]);
+<b>33.</b>                 }
+<b>34.</b>             }
+<b>35.</b>         }
+<b>36.</b>     }
+<b>37.</b>
+<b>38.</b>     cout << dp[n - 1][m - 1];
+<b>39.</b> }
+                </pre>
+            </code>
+        </div>
+        <p>
+        При реализации ДП всегда нужно быть уверенным, что все значения, необходимые для вычисления текущего, уже были вычислены.
+    </p>
+    <p style="font-size: 60px"><b>Основные элементы комбинаторики</b></p>
+    <p style="font-size: 48px">Комбинаторика</p>
+    <p>Комбинаторика, как можно судить по названию, - раздел математики, изучающий различные комбинации объектов и множеств. Комбинаторика очень тесно связана с информатикой, и часто встречается в олимпиадных задачах. Она включает в себя множество понятий, но в программировании чаще всего используются две из них: </p>
+    <p style="font-size: 48px">Перестановки</p>
+    <p>Когда две последовательности состоят из одинаковых объектов, расположенных в разном порядке, они называются <b>перестановками</b> одной и той же последовательности. Например, для последовательности 1,2,3 существует 6 перестановок:<br>
+        <br>● 1,2,3.<br>
+        ● 1,3,2.<br>
+        ● 2,1,3.<br>
+        ● 2,3,1.<br>
+        ● 3,1,2.<br>
+        ● 3,2,1.<br>
+        <br>Рассчитать число существующих перестановок достаточно просто. На первое место может стать один из N элементов. На второе место - один из N−1 оставшихся. На третье N−2, и так далее. На последнее место может стать только один элемент, нигде до этого не использовавшийся. Значит, количество перестановок последовательности длиной N равно
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <msub>
+                <mi>P</mi>
+                <mi>N</mi>
+            </msub>
+            <mo>=</mo>
+            <mn>1</mn>
+            <mo>&#x2217;<!-- ∗ --></mo>
+            <mn>2</mn>
+            <mo>&#x2217;<!-- ∗ --></mo>
+            <mo>&#x2026;<!-- … --></mo>
+            <mo>&#x2217;<!-- ∗ --></mo>
+            <mi>N</mi>
+            <mo>=</mo>
+            <munderover>
+                <mo movablelimits="false">&#x220F;<!-- ∏ --></mo>
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mi>i</mi>
+                    <mo>=</mo>
+                    <mn>1</mn>
+                </mrow>
+                <mi>N</mi>
+            </munderover>
+            <mi>i</mi>
+            <mo>=</mo>
+            <mi>N</mi>
+            <mo>!</mo>
+        </math>
+        Факториал, по определению, и является количеством перестановок последовательности длиной N.<br>
+
+        <p style="font-size: 48px">Сочетания</p>
+    <p>Сочетанием из n по k называется любой набор из n элементов, выбранных из данных k элементов. Например, рассмотрим множество 1,2,3,4. Существует 6 сочетаний по 2 из этого множества:
+        <br>● 1,2<br>
+        ● 1,3<br>
+        ● 1,4<br>
+        ● 2,3<br>
+        ● 2,4<br>
+        ● 3,4<br>
+        Число возможных сочетаний из n по k обозначается
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msubsup>
+                <mi>C</mi>
+                <mi>n</mi>
+                <mi>k</mi>
+            </msubsup>
+        </math>
+        и вычисляется по формуле
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <msubsup>
+                <mi>C</mi>
+                <mi>n</mi>
+                <mi>k</mi>
+            </msubsup>
+            <mo>=</mo>
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <mrow>
+                        <mi>n</mi>
+                        <mo>!</mo>
+                    </mrow>
+                    <mrow>
+                        <mi>k</mi>
+                        <mo>!</mo>
+                        <mo>&#x2217;<!-- ∗ --></mo>
+                        <mo stretchy="false">(</mo>
+                        <mi>n</mi>
+                        <mo>&#x2212;<!-- − --></mo>
+                        <mi>k</mi>
+                        <mo stretchy="false">)</mo>
+                        <mo>!</mo>
+                    </mrow>
+                </mfrac>
+            </mrow>
+        </math>
+        Число сочетаний очень часто встречается в задачах по программированию. Существуют два способа его вычисления:
+    <p style="font-size: 30px">Наивный способ</p>
+    <p>
+        Используется в случаях, когда нужно посчитать небольшое количество
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msubsup>
+                <mi>C</mi>
+                <mi>n</mi>
+                <mi>k</mi>
+            </msubsup>
+        </math>
+        за
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>O</mi>
+        <mo stretchy="false">(</mo>
+        <mi>N</mi>
+        <mo stretchy="false">)</mo>
+        </math>
+        каждое. Реализация на C++:
+        <div class="code-box">
+            <code>
+                <pre>
+<b>1.</b>long long fact(int x) { //Факторизация числа
+<b>2.</b>    long long result = 1;
+<b>3.</b>    for (int i = 2;i <= x;i++){
+<b>6.</b>        result *= i;
+<b>7.</b>    }
+<b>8.</b>    return result;
+<b>9.</b>}
+<b>10.</b>long long combinations(int n, int k){
+<b>11.</b>    return fact(n) / fact(k) / fact(n - k);
+<b>12.</b>}
+                </pre>
+            </code>
+        </div>
+    <p>
+        Разумеется, область применения такого подхода сильно ограничена вместимостью типа long long
+    <p style="font-size: 30px">При помощи динамического программирования</p>
+    <p>
+        Выразим
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msubsup>
+                <mi>C</mi>
+                <mi>n</mi>
+                <mi>k</mi>
+            </msubsup>
+        </math>
+        рекурсивно. Рассмотрим последний (n-ый) элемент: все сочетания можно разделить на две группы: те которые включают его, и те которые не включают. Заметим, что все сочетания первой группы содержат k−1 элементов из первых n−1, а все сочетания второй группы: k из первых n−1. Значит,
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <msubsup>
+                <mi>C</mi>
+                <mi>n</mi>
+                <mi>k</mi>
+            </msubsup>
+            <mo>=</mo>
+            <msubsup>
+                <mi>C</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mi>n</mi>
+                    <mo>&#x2212;<!-- − --></mo>
+                    <mn>1</mn>
+                </mrow>
+                <mi>k</mi>
+            </msubsup>
+            <mo>+</mo>
+            <msubsup>
+                <mi>C</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mi>n</mi>
+                    <mo>&#x2212;<!-- − --></mo>
+                    <mn>1</mn>
+                </mrow>
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mi>k</mi>
+                    <mo>&#x2212;<!-- − --></mo>
+                    <mn>1</mn>
+                </mrow>
+            </msubsup>
+        </math>
+        Таким образом мы можем рассчитать значения
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msubsup>
+                <mi>C</mi>
+                <mi>n</mi>
+                <mi>k</mi>
+            </msubsup>
+        </math>
+        для всех n≤N и k≤K за <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>O</mi>
+        <mo stretchy="false">(</mo>
+        <mi>N</mi>
+        <mi>K</mi>
+        <mo stretchy="false">)</mo>
+    </math>.
+        <br>Реализация на С++ (значения в поле по модулю
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msup>
+                <mn>10</mn>
+                <mn>9</mn>
+            </msup>
+            <mo>+</mo>
+            <mn>7</mn>
+        </math>
+        ):
+    </p>
+        <div class="code-box">
+            <code>
+                    <pre>
+<b>1.</b>#include &lt;bits/stdc++.h>
+<b>2.</b>using namespace std;
+<b>3.</b>const long long MOD = 1e9 + 7;
+<b>4.</b>long long c[1001][1001];
+<b>5.</b>int main() {
+<b>6.</b>    c[1][1] = 1;
+<b>7.</b>    for (int n = 2; n <= 1000; n++) {
+<b>8.</b>        c[n][1] = n;
+<b>9.</b>        for (int k = 2; k <= n; k++) {
+<b>10.</b>            c[n][k] = (c[n - 1][k] + c[n - 1][k - 1]) % MOD;
+<b>11.</b>        }
+<b>12.</b>    }
+<b>13.</b>    //Можем использовать c...
+<b>14.</b>}
+                    </pre>
+            </code>
+        </div>
+
+</div>
+
+
+
+
+
+<div class="site-footer">
+    <a href="https://t.me/high_faev" class="double-border-button">My Telegram</a>
+    <p class = "glow-effect-mini">
+        <span><span>В</span><span>о</span><span>о</span><span>б</span><span>р</span><span>а</span><span>ж</span><span>а</span><span>е</span><span>м</span><span>о</span><span>е</span></span>
+        <span><span>б</span><span>о</span><span>г</span><span>а</span><span>т</span><span>с</span><span>т</span><span>в</span><span>о</span></span> <span><span>з</span><span>н</span><span>а</span><span>н</span><span>и</span><span>я</span></span>
+        <span>—</span> <span><span>г</span><span>л</span><span>а</span><span>в</span><span>н</span><span>а</span><span>я</span></span> <span><span>п</span><span>р</span><span>и</span><span>ч</span><span>и</span><span>н</span><span>а</span></span>
+        <span><span>е</span><span>г</span><span>о</span></span> <span><span>б</span><span>е</span><span>д</span><span>н</span><span>о</span><span>с</span><span>т</span><span>и</span></span></p>
+</div>
+<script src="../jscode.js"></script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>

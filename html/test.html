@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text</title>
+    <style>
+        .code-box{
+            background: rgba(146, 161, 239, 0.8);
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="code-box">
+        <code>
+            <p><br><b>1.</b>using namespace std;
+            <br><b>2.</b>vector<int> graph[100000];
+            <br><b>3.</b>    //массив из 100000 векторов.int main() {
+            <br><b>4.</b>    int n, m;
+            <br><b>5.</b>    cin >> n >> m;
+            <br><b>6.</b>    for (int i = 0; i < m; i++){
+            <br><b>7.</b>        int u, v;
+            <br><b>8.</b>        cin >> u >> v;
+            <br><b>9.</b>        u--, v--;
+            <br><b>10.</b>        graph[u].push_back(v);
+            <br><b>11.</b>        graph[v].push_back(u);
+            <br><b>12.</b>    }
+            <br><b>13.</b>    for (int i = 0; i < n;i++){
+            <br><b>14.</b>        int c = 0;
+            <br><b>15.</b>        for (int v: graph[i]) {
+            <br><b>16.</b>              c++;                //можно было бы просто записать "int c = graph[i].size();",
+            <br><b>17.</b>                                  //но такая реализация показывает, как можно перебирать
+            <br><b>18.</b>                                  //соседние вершины.
+            <br><b>19.</b>        }
+            <br><b>20.</b>    cout << c << " edges adjacent to vertex " << i + 1 << endl;
+            <br><b>21.</b>  }
+            <br><b>22.</b>}
+            </p>
+        </code>
+    </div>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BestProger</title>
+  <link rel="stylesheet" href="../css/stylies4.css">
+</head>
+<body>
+<div class="site-header">
+  <h1 class="glow-effect"><span>B</span><span>E</span><span>S</span><span>T</span><span>P</span><span>R</span><span>O</span><span>G</span><span>E</span><span>R</span></h1>
+  <a href="../index.html" class="floating-button">Новости</a>
+  <a href="thems.html" class="floating-button">Темы</a>
+  <a href="taska.html" class="floating-button">Архив Задач</a>
+</div>
+<div class="main-site" >
+  <div style="text-align: center"><h1 class="glow-effect"><span>К</span><span>о</span><span>н</span><span>т</span><span>е</span><span>й</span><span>н</span><span>е</span><span>р</span><span>ы</span><span>:</span><span> </span><span>с</span><span>е</span><span>т</span><span>,</span><span> </span><span>м</span><span>а</span><span>п</span><span>а</span><span>,</span><span> </span><span>м</span><span>у</span><span>л</span><span>ь</span><span>т</span><span>и</span><span>с</span><span>е</span><span>т</span><span>,</span><span> </span><span>т</span><span>.</span><span>д</span><span>.</span></h1></div>
+</div>
+
+<div class="wrap">
+  <p style="font-size: 48px">std::map (ассоциативный массив)</p>
+  <p>Ассоциативный массив – структура данных, которая позволяет нам выполнять различные операции над парами <br>&lt;ключ, значение>. В С++ ассоциативные массивы представлены в стандартной библиотеке классом std::map.</p>
+  <p style="font-size: 30px">Асимптотическая сложность</p>
+  <p>
+    <br>●Вставка элемента, обновление значения ключа –
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mi>O</mi>
+      <mo stretchy="false">(</mo>
+      <mi>log</mi>
+      <mo>&#x2061;<!-- ⁡ --></mo>
+      <mi>N</mi>
+      <mo stretchy="false">)</mo>
+    </math>
+    .
+    <br>●Удаление по ключу –
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mi>O</mi>
+      <mo stretchy="false">(</mo>
+      <mi>log</mi>
+      <mo>&#x2061;<!-- ⁡ --></mo>
+      <mi>N</mi>
+      <mo stretchy="false">)</mo>
+    </math>
+    .
+    <br>●Поиск по ключу –
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mi>O</mi>
+      <mo stretchy="false">(</mo>
+      <mi>log</mi>
+      <mo>&#x2061;<!-- ⁡ --></mo>
+      <mi>N</mi>
+      <mo stretchy="false">)</mo>
+    </math>
+    .
+    <br>●Поиск по значению –
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mi>O</mi>
+      <mo stretchy="false">(</mo>
+      <mi>N</mi>
+      <mo stretchy="false">)</mo>
+    </math>
+    (необходимо итерироваться, пока не будет найдено необходимое значение).
+    <br>●Подсчёт различных ключей на текущий момент –
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mi>O</mi>
+      <mo stretchy="false">(</mo>
+      <mn>1</mn>
+      <mo stretchy="false">)</mo>
+    </math>
+    .
+    <br><br>Стоит помнить, что асимптотическая сложность – по сути теоретический параметр, а на практике разница между временем работы разных операций одинаковой сложности может быть очень ощутима. В случае map, операции сложностью
+    <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mi>O</mi>
+      <mo stretchy="false">(</mo>
+      <mi>log</mi>
+      <mo>&#x2061;<!-- ⁡ --></mo>
+      <mi>N</mi>
+      <mo stretchy="false">)</mo>
+    </math>
+    работают гораздо медленнее, чем, например, бинарный поиск, и при решении задач об этом необходимо помнить.
+    <p style="font-size: 30px">Асимптотическая сложность</p>
+    <p>
+      Решим простую задачу, используя map:
+
+      <br>Дана строка
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+      <mi>s</mi>
+      </math>
+      из
+      <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>n</mi>
+      </math>
+      слов. Необходимо вывести наиболее часто встречающееся слово и количество его вхождений в стрку.
+      <div class="code-box">
+          <pre>
+<b>1.</b> #include &lt;bits/stdc++.h>
+<b>2.</b>
+<b>3.</b> using namespace std;
+<b>4.</b>
+<b>5.</b> int main() {
+<b>6.</b>     // Объявление: map&lt;t1, t2>.
+<b>7.</b>     // t1 - тип ключа
+<b>8.</b>     // t2 - тип значения
+<b>9.</b>     map&lt;string, int> cnt;
+<b>10.</b>    int n;
+<b>11.</b>    string s;
+<b>12.</b>
+<b>13.</b>    cin >> n;
+<b>14.</b>    for (int i = 0; i < n; i ++) {
+<b>15.</b>        cin >> s;
+<b>16.</b>        // Подсчет количества вхождений каждого слова.
+<b>17.</b>        cnt[s]++;
+<b>18.</b>    }
+<b>19.</b>    int entries = 0;
+<b>20.</b>    string word = "";
+<b>21.</b>    // Итерирование по map:
+<b>22.</b>    // обход производится в порядке возрастания ключей.
+<b>23.</b>    for (pair&lt;string, int> i: cnt) {
+<b>24.</b>        if (entries < i.second) {
+<b>25.</b>            entries = i.second;
+<b>26.</b>            word = i.first;
+<b>27.</b>        }
+<b>28.</b>    }
+<b>29.</b>    cout << entries << endl;
+<b>30.</b>    cout << word << endl;
+<b>31.</b>}
+          </pre>
+      </div>
+    <p>
+        <p style="font-size: 48px">std::set (Множество)</p>
+        <p>
+        Множество (set) - структура данных, предназначенная для хранения значений и быстрого выполнения на них базовых операций, включая поиск и удаление.
+        <br>Свойства множеств, которые важны для решения олимпиадных задач:
+        <br><br>●Элементы во множестве хранятся в отсортированном по возрастанию виде.
+        <br>●Множество хранит только одно вхождение любого элемента (в отличие от мультимножества).
+        <br><br>Большинство операций с множествами с С++ имеют сложность порядка
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>log</mi>
+            <mo>&#x2061;<!-- ⁡ --></mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+          </math>
+          операций, однако также не стоит забывать про константу, которая эквивалентна константе map.
+        <br>Один из способов интерпретации множеств заключается в том, что множества - это частный случай ассоциативных массивов, где значение отсутсвует, или не берётся во внимание. Это выражается в сходствах как в видах поддерживаемых операций, так и в способе реализации этих структур данных в стандартной библиотеке (красно-чёрные деревья).
+        <p style="font-size: 30px">Основные операции и асимптотическая сложность</p>
+          <p>
+          <br>●Вставка элемента –
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <mi>O</mi>
+              <mo stretchy="false">(</mo>
+              <mi>log</mi>
+              <mo>&#x2061;<!-- ⁡ --></mo>
+              <mi>N</mi>
+              <mo stretchy="false">)</mo>
+            </math>
+            .
+          <br>●Поиск элемента –
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <mi>O</mi>
+              <mo stretchy="false">(</mo>
+              <mi>log</mi>
+              <mo>&#x2061;<!-- ⁡ --></mo>
+              <mi>N</mi>
+              <mo stretchy="false">)</mo>
+            </math>
+            .
+          <br>●Удаление элемента –
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <mi>O</mi>
+              <mo stretchy="false">(</mo>
+              <mi>log</mi>
+              <mo>&#x2061;<!-- ⁡ --></mo>
+              <mi>N</mi>
+              <mo stretchy="false">)</mo>
+            </math>
+            .
+          <br>●Подсчёт элементов –
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <mi>O</mi>
+              <mo stretchy="false">(</mo>
+              <mn>1</mn>
+              <mo stretchy="false">)</mo>
+            </math>
+            .
+        <p style="font-size: 30px">Использование</p>
+        <p>
+          Решим простую задачу, используя множество:
+          <br>Дан массив
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>a</mi>
+          </math>
+          из
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>n</mi>
+            <mo>&#x2264;<!-- ≤ --></mo>
+            <msup>
+              <mn>10</mn>
+              <mn>5</mn>
+            </msup>
+          </math>
+          чисел
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msub>
+              <mi>a</mi>
+              <mi>i</mi>
+            </msub>
+            <mo>&#x2264;<!-- ≤ --></mo>
+            <msup>
+              <mn>10</mn>
+              <mn>9</mn>
+            </msup>
+          </math>
+          . Необходимо вывести количество различных элементов в данном массиве.
+        <div class="code-box">
+            <pre>
+<b>1.</b> #include &lt;bits/stdc++.h>
+<b>2.</b>
+<b>3.</b> using namespace std;
+<b>4.</b>
+<b>5.</b> int main() {
+<b>6.</b>     // Объявление множества:
+<b>7.</b>     // set&lt;type>, где type - тип элементов.
+<b>8.</b>     set&lt;int> s;
+<b>9.</b>
+<b>10.</b>    int n, x;
+<b>11.</b>    cin >> n;
+<b>12.</b>    for (int i = 0; i < n; i++) {
+<b>13.</b>        cin >> x;
+<b>14.</b>        // Вставка элементов массива во множество.
+<b>15.</b>        s.insert(x);
+<b>16.</b>    }
+<b>17.</b>    // Вывод размера множества,
+<b>18.</b>    // т.е. количества различных элементов в нем.
+<b>19.</b>    cout << s.size();
+<b>20.</b>}
+            </pre>
+        </div>
+      <p style="font-size: 48px">std::multiset (Мультимножества)</p>
+      <p>
+        Мультимножество (multiset) обладает теми же свойствами, что и обычное множество, за исключением того, что один элемент может входить в мультимножество несколько раз. На мультимножества можно смотреть как на ассоциативные массивы, где значения – числа, обозначающие количество вхождений соответствующего ключа в мультимножество.
+      <p style="font-size: 48px">Структуры на хэш-таблицах</p>
+      <p>
+        Для всех описанных выше структур данных существуют их аналоги с префиксом unordered_ (неупорядоченный). Отличие их состоит в том, что они реализованы с использованием хэш-таблиц, а значит асимптотическая сложность операций на них равна
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mi>O</mi>
+          <mo stretchy="false">(</mo>
+          <mn>1</mn>
+          <mo stretchy="false">)</mo>
+        </math>
+        (амортизированно), однако константа еще больше, чем в упорядоченных структурах, обсуждаемых выше.
+
+        <br><br>Под “амортизированной” сложностью понимается, простыми словами, средняя сложность за большое количество операций. То есть даже при амортизированной сложности
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mi>O</mi>
+          <mo stretchy="false">(</mo>
+          <mn>1</mn>
+          <mo stretchy="false">)</mo>
+        </math>
+        , в одиночном худшем случае сложность может достигать
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mi>O</mi>
+          <mo stretchy="false">(</mo>
+          <mi>n</mi>
+          <mo stretchy="false">)</mo>
+        </math>
+        , однако происходит такое крайне редко.
+
+        <br><br>Неупорядоченность проявляется в том, например, что элементы unordered_map при итерировании не посещаются в порядке возрастания ключей. Это стоит учитывать при решении задач, где лишний логарифм в асимптотике может быть критичен.
+        <p style="font-size: 48px">Подключение библиотек</p>
+        <p>
+          Если вы по какой-либо причине не используете bits/stdc++.h, то все упомянутые выше структуры данных находятся в одноименных библиотеках. Т.е. для использования map необходимо написать #include &lt;map>.
+      </p>
+</div>
+
+<div class="site-footer">
+  <a href="https://t.me/high_faev" class="double-border-button">My Telegram</a>
+  <p class = "glow-effect-mini">
+    <span><span>В</span><span>о</span><span>о</span><span>б</span><span>р</span><span>а</span><span>ж</span><span>а</span><span>е</span><span>м</span><span>о</span><span>е</span></span>
+    <span><span>б</span><span>о</span><span>г</span><span>а</span><span>т</span><span>с</span><span>т</span><span>в</span><span>о</span></span> <span><span>з</span><span>н</span><span>а</span><span>н</span><span>и</span><span>я</span></span>
+    <span>—</span> <span><span>г</span><span>л</span><span>а</span><span>в</span><span>н</span><span>а</span><span>я</span></span> <span><span>п</span><span>р</span><span>и</span><span>ч</span><span>и</span><span>н</span><span>а</span></span>
+    <span><span>е</span><span>г</span><span>о</span></span> <span><span>б</span><span>е</span><span>д</span><span>н</span><span>о</span><span>с</span><span>т</span><span>и</span></span></p>
+</div>
+<script src="../jscode.js"></script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>

@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BestProger</title>
+    <link rel="stylesheet" href="../css/stylies4.css">
+</head>
+<body>
+<div class="site-header">
+    <h1 class="glow-effect"><span>B</span><span>E</span><span>S</span><span>T</span><span>P</span><span>R</span><span>O</span><span>G</span><span>E</span><span>R</span></h1>
+    <a href="../index.html" class="floating-button">Новости</a>
+    <a href="thems.html" class="floating-button">Темы</a>
+    <a href="taska.html" class="floating-button">Архив Задач</a>
+</div>
+<div class="main-site" >
+    <div style="text-align: center"><h1 class="glow-effect"><span>А</span><span>с</span><span>и</span><span>м</span><span>п</span><span>т</span><span>о</span><span>т</span><span>и</span><span>к</span><span>а</span><span>,</span><span> </span><span>с</span><span>л</span><span>о</span><span>ж</span><span>н</span><span>о</span><span>с</span><span>т</span><span>ь</span></h1></div>
+</div>
+
+<div class="wrap">
+    <p style="font-size: 48px">Вступление</p>
+    <p>Наверное, каждый из нас на начальных этапах сталкивался с ситуацией вида: </p>
+    <p style="font-style: italic">“я решил эту задачу, но она не проходит по времени”</p>
+    <p>Это может озадачивать: вы написали то, что от вас требовалось по условию, проверили свой код, но решение почему-то не укладывается в ограничение по времени (о котором вы раньше даже не задумывались). Причина этого явления проста: вы перешли с уровня задач на “реализацию” на уровень задач на “идею”. Это значит, что просто написать то, что сказано в условии, теперь недостаточно. Вам нужно начать задумываться об эффективности вашего решения.
+        <br>В чём же выражается эффективность? Чаще всего самый важный параметр - время работы программы. Стоит сразу заметить, что в большинстве случаев время работы оптимального и наивного решения отличается далеко не в 2 раза. Наивное решение для многих задач может работать минуты, часы, года, а часто и вовсе астрономические величины. Причины такого поведения мы рассмотрим ниже.
+        <br>Другим важным параметром является количество использованной памяти, но оно редко становится ключевым для эффективности программы. Если ваше решение не укладывается в ограничение по памяти, оно скорее всего не уложится и в ограничение по времени.</p>
+    <p style="font-size: 48px">Пример задачи</p>
+    <p>В качестве примера рассмотрим следующую задачу:
+        <br><span style="color: #1ede84">Дан массив из N натуральных чисел (N≤106). Числа не превышают 106. Сколько пар равных чисел в нём содержится?</span>
+        <br>Казалось бы, что может быть проще? Недолго думая вы пишете код такого вида:
+        <div class="code-box">
+            <code>
+                <pre>
+<b>1.</b> #include &lt;bits/stdc++.h>
+<b>2.</b>
+<b>3.</b> using namespace std;
+<b>4.</b>
+<b>5.</b> const int MAX_N = 1000000;
+<b>6.</b>
+<b>7.</b> int arr[MAX_N];
+<b>8.</b>
+<b>9.</b> int main() {
+<b>10.</b>    int n;
+<b>11.</b>    cin >> n;
+<b>12.</b>
+<b>13.</b>    for (int i = 0; i < n; i++) {
+<b>14.</b>        cin >> arr[i];
+<b>15.</b>    }
+<b>16.</b>
+<b>17.</b>    long long ans = 0;
+<b>18.</b>
+<b>19.</b>    for (int i = 0; i < n; i++) {           // внешний цикл
+<b>20.</b>        for (int j = i + 1; j < n; j++) {   // внутренний цикл
+<b>21.</b>            if (arr[i] == arr[j]) {
+<b>22.</b>                ans++;
+<b>23.</b>            }
+<b>24.</b>        }
+<b>25.</b>    }
+<b>26.</b>
+<b>27.</b>    cout << ans << endl;
+<b>28.</b>}
+                </pre>
+            </code>
+        </div>
+    <p>
+        И получаете вердикт TL (Time Limit Exceeded). Давайте разберёмся, почему: посчитаем, сколько операций выполнит наш алгоритм в худшем случае (при
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+            <mo>=</mo>
+            <msup>
+                <mn>10</mn>
+                <mn>6</mn>
+            </msup>
+        </math>
+        ). Рассмотрим первую итерацию внешнего цикла (
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>i</mi>
+            <mo>=</mo>
+            <mn>0</mn>
+        </math>
+        ). Во внутреннем цикле переменная
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>j</mi>
+        </math>
+        будет принимать по очереди все значения от
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mn>1</mn>
+        </math>
+        до
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>1</mn>
+        </math>
+        , то есть тело внутреннего цикла выполнится
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>1</mn>
+        </math>
+        раз. На второй итерации внешнего цикла число итераций внутреннего будет равно
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>2</mn>
+        </math>
+        . На третьей
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>3</mn>
+        </math>
+        . И так далее, пока это число не достигнет нуля. Общее число итераций мы можем выразить следующей формулой:
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>1</mn>
+            <mo stretchy="false">)</mo>
+            <mo>+</mo>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>2</mn>
+            <mo stretchy="false">)</mo>
+            <mo>+</mo>
+            <mo>&#x2026;<!-- … --></mo>
+            <mo>+</mo>
+            <mn>1</mn>
+        </math>
+        Преобразуем её, используя формулу суммы арифметической прогрессии:
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>1</mn>
+            <mo stretchy="false">)</mo>
+            <mo>+</mo>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>2</mn>
+            <mo stretchy="false">)</mo>
+            <mo>+</mo>
+            <mo>&#x2026;<!-- … --></mo>
+            <mo>+</mo>
+            <mn>1</mn>
+            <mo>=</mo>
+            <mspace linebreak="newline" />
+            <mo>=</mo>
+            <mn>1</mn>
+            <mo>+</mo>
+            <mn>2</mn>
+            <mo>+</mo>
+            <mo>&#x2026;<!-- … --></mo>
+            <mo>+</mo>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>1</mn>
+            <mo stretchy="false">)</mo>
+            <mo>=</mo>
+            <mspace linebreak="newline" />
+            <mo>=</mo>
+            <munderover>
+                <mo movablelimits="false">&#x2211;<!-- ∑ --></mo>
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mi>i</mi>
+                    <mo>=</mo>
+                    <mn>1</mn>
+                </mrow>
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mi>N</mi>
+                    <mo>&#x2212;<!-- − --></mo>
+                    <mn>1</mn>
+                </mrow>
+            </munderover>
+            <mi>i</mi>
+            <mo>=</mo>
+            <mspace linebreak="newline" />
+            <mo>=</mo>
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <mrow>
+                        <mn>1</mn>
+                        <mo>+</mo>
+                        <mo stretchy="false">(</mo>
+                        <mi>N</mi>
+                        <mo>&#x2212;<!-- − --></mo>
+                        <mn>1</mn>
+                        <mo stretchy="false">)</mo>
+                    </mrow>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+            <mo>&#x2217;<!-- ∗ --></mo>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>1</mn>
+            <mo stretchy="false">)</mo>
+            <mo>=</mo>
+            <mspace linebreak="newline" />
+            <mo>=</mo>
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <mrow>
+                        <mi>N</mi>
+                        <mo>&#x2217;<!-- ∗ --></mo>
+                        <mo stretchy="false">(</mo>
+                        <mi>N</mi>
+                        <mo>&#x2212;<!-- − --></mo>
+                        <mn>1</mn>
+                        <mo stretchy="false">)</mo>
+                    </mrow>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+        </math>
+        В худшем случае это будет равно
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <mrow>
+                        <msup>
+                            <mn>10</mn>
+                            <mn>6</mn>
+                        </msup>
+                        <mo>&#x2217;<!-- ∗ --></mo>
+                        <mo stretchy="false">(</mo>
+                        <msup>
+                            <mn>10</mn>
+                            <mn>6</mn>
+                        </msup>
+                        <mo>&#x2212;<!-- − --></mo>
+                        <mn>1</mn>
+                        <mo stretchy="false">)</mo>
+                    </mrow>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+            <mo>=</mo>
+            <mn>499999500000</mn>
+            <mo>&#x2248;<!-- ≈ --></mo>
+            <mn>5</mn>
+            <mo>&#x2217;<!-- ∗ --></mo>
+            <msup>
+                <mn>10</mn>
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mn>11</mn>
+                </mrow>
+            </msup>
+            <mo>,</mo>
+        </math>
+        Или примерно пятьсот миллиардов. Много, не так ли? В 2017-м году обычный процессор может выполнять на одном ядре примерно
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msup>
+                <mn>10</mn>
+                <mn>8</mn>
+            </msup>
+        </math>
+        операций в секунду. Стоит заметить, что не все операции равнозначны. С
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msup>
+                <mn>10</mn>
+                <mn>8</mn>
+            </msup>
+        </math>
+        операций сложения любой процессор справится без проблем, а, например, взятия квадратного корня, уже не каждый. Принимая производительность процессора за
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msup>
+                <mn>10</mn>
+                <mn>8</mn>
+            </msup>
+        </math>
+        операций/секунду, наша программа выполнится за каких-то 5000 секунд, примерно 1.5 часа. Стоит ли говорить, что это неприемлемо?
+
+        <br>Как же решать эту задачу? Нужно придумать алгоритм, который будет работать гораздо быстрее. В таких ситуациях всегда нужно внимательно проанализировать ограничения на входные данные. Кроме ограничения на размер массива, у нас также ограничены сами числа: они не превышают
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msup>
+                <mn>10</mn>
+                <mn>6</mn>
+            </msup>
+        </math>
+        . Можно ли это как-либо использовать? Да.
+
+        <br>Посчитаем вспомогательный массив c, где c[i] - количество чисел i в изначальном массиве. Если в массиве пять троек, то c[3]=5. Как в таком случае получить количество пар троек? Владея элементарной комбинаторикой, или черновиком с ручкой, можно заметить, что количество всех пар связано с количеством элементов формулой
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mi>P</mi>
+            <mo>=</mo>
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <mrow>
+                        <mi>x</mi>
+                        <mo>&#x2217;<!-- ∗ --></mo>
+                        <mo stretchy="false">(</mo>
+                        <mi>x</mi>
+                        <mo>&#x2212;<!-- − --></mo>
+                        <mn>1</mn>
+                        <mo stretchy="false">)</mo>
+                    </mrow>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+        </math>
+        Значит, мы можем найти количество пар троек:
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mi>P</mi>
+            <mo>=</mo>
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <mrow>
+                        <mn>5</mn>
+                        <mo>&#x2217;<!-- ∗ --></mo>
+                        <mn>4</mn>
+                    </mrow>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+            <mo>=</mo>
+            <mn>10</mn>
+        </math>
+        Посчитаем этот параметр для всех чисел и сложим получившиеся результаты. Это и будет ответом на задачу.
+        <div class="code-box">
+            <code>
+                <pre>
+<b>1.</b> #include &lt;bits/stdc++.h>
+<b>2.</b>
+<b>3.</b> using namespace std;
+<b>4.</b>
+<b>5.</b> const int MAX_N = 1000000;
+<b>6.</b> const int MAX_VALUE = 1000000;
+<b>7.</b>
+<b>8.</b> int arr[MAX_N];
+<b>9.</b>
+<b>10.</b>// Для чисел от 0 до 1000000.
+<b>11.</b>// Мы будем умножать эти значения, поэтому используем тип long long
+<b>12.</b>// для предотвращения переполнения.
+<b>13.</b>long long num_count[MAX_VALUE + 1];
+<b>14.</b>
+<b>15.</b>int main() {
+<b>16.</b>    int n;
+<b>17.</b>    cin >> n;
+<b>18.</b>
+<b>19.</b>    for (int i = 0; i < n; i++) {
+<b>20.</b>        cin >> arr[i];
+<b>21.</b>        num_count[arr[i]]++;
+<b>22.</b>    }
+<b>23.</b>
+<b>24.</b>    long long ans = 0;
+<b>25.</b>
+<b>26.</b>    for (int i = 0; i <= MAX_VALUE; i++) {
+<b>27.</b>        ans += num_count[i] * (num_count[i] - 1) / 2;
+<b>28.</b>    }
+<b>29.</b>
+<b>30.</b>    cout << ans << endl;
+<b>31.</b>}
+                </pre>
+            </code>
+        </div>
+    <p>
+        Как видите, мы уложились в два цикла, в худшем случае каждый из них выполнит по миллиону итераций, и общее число операций будет порядка
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mn>3</mn>
+            <mo>&#x2217;<!-- ∗ --></mo>
+            <msup>
+                <mn>10</mn>
+                <mn>6</mn>
+            </msup>
+        </math>
+        . Значит, на том же процессоре наша программа будет выполняться за 30 мс, что уже гораздо лучше.
+    <p style="font-size: 48px">Асимптотическая сложность</p>
+    <p>
+        На практике точно оценить время работы программы почти что невозможно. Даже если вы точно подсчитаете все элементарные операции (инструкции машинного кода) вашей программы, что уже неоправданно сложно, каждая инструкция выполняется процессором за разное количество тактов. Процессор часто выполняет несколько операций сложения за такт, а вот для операции деления требуется около десяти тактов. Время выполнения одного такта также может варьироваться (процессор не всегда работает на максимальной тактовой частоте). А если вспомнить про многопоточность и многоядерность, то перспективы окончательно омрачняются. Поэтому точным временем работы в информатике не оперируют.<b>Вместо этого используется зависимость времени работы от входных данных.</b> Традиционно считается, что время работы прямо пропорционально количеству операций, так что эта зависимость отождествляется с <b>зависимостью количества операций от входных данных.</b>
+        <br>В предыдущем разделе мы считали так называемое “примерное количество операций” наивного алгоритма. Посчитаем его ещё раз, в этот раз учитывая все операции, включая ввод-вывод и другие мелкие операции вне основных циклов, и выразим общее количество как функцию от размера массива N:
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mi>O</mi>
+            <mi>p</mi>
+            <mi>s</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+            <mo>=</mo>
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <mrow>
+                        <mi>N</mi>
+                        <mo>&#x2217;<!-- ∗ --></mo>
+                        <mo stretchy="false">(</mo>
+                        <mi>N</mi>
+                        <mo>&#x2212;<!-- − --></mo>
+                        <mn>1</mn>
+                        <mo stretchy="false">)</mo>
+                    </mrow>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+            <mo>+</mo>
+            <mi>N</mi>
+            <mo>+</mo>
+            <mi>c</mi>
+        </math>
+        Слагаемое N учитывает цикл для ввода массива, а c - некоторая константа, соответствующая количеству операций вне всех циклов. Преобразуем эту формулу в стандартный вид:
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mi>O</mi>
+            <mi>p</mi>
+            <mi>s</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+            <mo>=</mo>
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <msup>
+                        <mi>N</mi>
+                        <mn>2</mn>
+                    </msup>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+            <mo>&#x2212;<!-- − --></mo>
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <mi>N</mi>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+            <mo>+</mo>
+            <mi>c</mi>
+        </math>
+        То есть, принимая, что время работы прямо пропорционально количеству операций, время работы наивного алгоритма равно:
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mi>T</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+            <mo>&#x2248;<!-- ≈ --></mo>
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <msup>
+                        <mi>N</mi>
+                        <mn>2</mn>
+                    </msup>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+            <mo>&#x2212;<!-- − --></mo>
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <mi>N</mi>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+            <mo>+</mo>
+            <mi>c</mi>
+        </math>
+        Теперь необходимо ввести понятие “<b>O большое</b>”. “О большое” - математический способ <span style="font-style: italic">приблизительной</span> оценки функции. Запись выглядит следующим образом:
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mi>f</mi>
+            <mo stretchy="false">(</mo>
+            <mi>x</mi>
+            <mo stretchy="false">)</mo>
+            <mo>&#x2208;<!-- ∈ --></mo>
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>g</mi>
+            <mo stretchy="false">(</mo>
+            <mi>x</mi>
+            <mo stretchy="false">)</mo>
+            <mo stretchy="false">)</mo>
+        </math>
+        И формально означает следующее утверждение:
+        <br><b style="font-style: oblique">Существуют такие числа
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>M</mi>
+        </math>
+        и
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>C</mi>
+        </math>
+        , что выполняется утверждение:
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>f</mi>
+            <mo stretchy="false">(</mo>
+            <mi>x</mi>
+            <mo stretchy="false">)</mo>
+            <mo>&lt;</mo>
+            <mi>C</mi>
+            <mo>&#x2217;<!-- ∗ --></mo>
+            <mi>g</mi>
+            <mo stretchy="false">(</mo>
+            <mi>x</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        для всех
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>x</mi>
+            <mo>&gt;</mo>
+            <mi>M</mi>
+        </math>
+        .</b>
+        Или, проще говоря, для достаточно больших
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>x</mi>
+        </math>
+        ,
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>f</mi>
+            <mo stretchy="false">(</mo>
+            <mi>x</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        растёт медленнее
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>g</mi>
+            <mo stretchy="false">(</mo>
+            <mi>x</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        .
+
+        <br>Применив такую запись к нашему времени работы мы получим:
+        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+            <mi>T</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+            <mo>&#x2208;<!-- ∈ --></mo>
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msup>
+                <mi>N</mi>
+                <mn>2</mn>
+            </msup>
+            <mo stretchy="false">)</mo>
+        </math>
+        Мы откинули члены
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+        </math>
+        и
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>c</mi>
+        </math>
+        , потому что при достаточно больших
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+        </math>
+        они бесконечно малы по сравнению с
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msup>
+                <mi>N</mi>
+                <mn>2</mn>
+            </msup>
+        </math>
+        . Деление на 2 откидывается, так как это, по сути, умножение на константу
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow class="MJX-TeXAtom-ORD">
+                <mfrac>
+                    <mn>1</mn>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+        </math>
+        , а константа нас не интересует при оценке скорости роста.
+
+        <br>Вообще, так как “О большое” ограничивает рост функции только сверху, с таким же успехом можно сказать, что
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>T</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+            <mo>&#x2208;<!-- ∈ --></mo>
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msup>
+                <mi>N</mi>
+                <mn>3</mn>
+            </msup>
+            <mo stretchy="false">)</mo>
+        </math>
+        , или
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>T</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+            <mo>&#x2208;<!-- ∈ --></mo>
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msup>
+                <mi>N</mi>
+                <mn>4</mn>
+            </msup>
+            <mo stretchy="false">)</mo>
+        </math>
+        . Но на практике ограничение стараются подобрать как можно точнее, так что записи выше в каком-то смысле можно назвать некорректными, так как очевидно, что существует более точное ограничение.
+
+        <br>Строго говоря, у зависимости времени работы от входных данных есть собственное название. Этот параметр называется <b>асимптотической сложностью</b>, или просто сложностью. Можно сказать, что сложность рассматриваемого алгоритма
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msup>
+                <mi>N</mi>
+                <mn>2</mn>
+            </msup>
+            <mo stretchy="false">)</mo>
+        </math>
+        , или что у алгоритма квадратичная сложность. На практике понятия “время работы”, “сложность” и “асимптотика” используются как взаимозаменяемые.
+
+        <br>Используя новые термины, можно сказать, что у наивного решения этой задачи сложность
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msup>
+                <mi>N</mi>
+                <mn>2</mn>
+            </msup>
+            <mo stretchy="false">)</mo>
+        </math>
+        , а у оптимального
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        .
+
+        <br>Часто сложность решения нельзя выразить через одну переменную, в таких случаях можно использовать функции от нескольких переменных:
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>M</mi>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        ,
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mi>log</mi>
+            <mo>&#x2061;<!-- ⁡ --></mo>
+            <mi>M</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        , и так далее.
+
+        <br>Для одной переменной чаще всего встречаются следующие значения сложности алгоритма:
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>O</mi>
+        <mo stretchy="false">(</mo>
+        <mn>1</mn>
+        <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>log</mi>
+            <mo>&#x2061;<!-- ⁡ --></mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msup>
+                <mi>log</mi>
+                <mn>2</mn>
+            </msup>
+            <mo>&#x2061;<!-- ⁡ --></mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mroot>
+                <mi>N</mi>
+                <mpadded width="+0.13333333333333333em">
+                    <mn>3</mn>
+                </mpadded>
+            </mroot>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msqrt>
+                <mi>N</mi>
+            </msqrt>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mi>log</mi>
+            <mo>&#x2061;<!-- ⁡ --></mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <msup>
+                <mi>log</mi>
+                <mn>2</mn>
+            </msup>
+            <mo>&#x2061;<!-- ⁡ --></mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <msqrt>
+                <mi>N</mi>
+            </msqrt>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msup>
+                <mi>N</mi>
+                <mn>2</mn>
+            </msup>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msup>
+                <mi>N</mi>
+                <mn>2</mn>
+            </msup>
+            <mi>log</mi>
+            <mo>&#x2061;<!-- ⁡ --></mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msup>
+                <mi>N</mi>
+                <mn>3</mn>
+            </msup>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <msup>
+                <mn>2</mn>
+                <mi>N</mi>
+            </msup>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>●
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>N</mi>
+            <mo>!</mo>
+            <mo stretchy="false">)</mo>
+        </math>
+        <br>Иногда нужно подчеркнуть, что несмотря на то, что два алгоритма имеют одинаковую сложность, один из них заметно эффективнее другого. В таких случаях говорят, что у такого алгоритма <b>ниже константа</b>.
+        <p style="font-size: 48px">Пессимистичная и средняя сложность</p>
+        <p>
+        В нашем примере время работы наивного алгоритма не зависело от содержимого входного массива, а только от его размера. Для многих алгоритмов содержимое входных данных влияет на время работы, что не позволяет составить простую и точную функцию сложности.
+
+            <br>В таких ситуациях чаще всего используются “не совсем точные” определения сложности, которые не учитывают конкретной структуры входных данных. Это либо <span style="font-style: italic">пессимистичная сложность</span> (англ. worst-case complexity), либо <span style="font-style: italic">средняя сложность</span> (англ. average complexity). В олимпиадных задачах важнее первое из них, и под словом “сложность” понимают имеют пессимистичную сложность.
+
+        <br>Определение достаточно интуитивно - если пессимистичная сложность алгоритма
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>O</mi>
+                <mo stretchy="false">(</mo>
+                <msup>
+                    <mi>N</mi>
+                    <mn>2</mn>
+                </msup>
+                <mo stretchy="false">)</mo>
+            </math>
+            , где
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>N</mi>
+            </math>
+            - размер входного массива, это значит что существует хотя бы один такой массив, для которого алгоритм работает за
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>O</mi>
+                <mo stretchy="false">(</mo>
+                <msup>
+                    <mi>N</mi>
+                    <mn>2</mn>
+                </msup>
+                <mo stretchy="false">)</mo>
+            </math>
+            . При этом не имеет значения, как быстро работает алгоритм в среднем случае, важен только худший.
+        <p style="font-size: 48px">Ограничение по времени и асимптотическая сложность</p>
+        <p>
+            Сложность алгоритма - более фундаментальная и абстрактная величина, чем количество операций, и тем более чем абсолютное время работы. Тем не менее, при решении задач ограничение накладывается именно на абсолютное время: тестирующая система не может определять сложность вашего решения по его исходному коду и сравнивать её со сложностью авторского решения. В связи с этим возникает вопрос: как, оценив сложность решения, понять, помещается ли оно в ограничение по времени.
+            <br>Перед тем, как ответить на этот вопрос, необходимо подчеркнуть, что метод, приведённый ниже, не имеет абсолютно никакого формального обоснования, и работает лишь в классических олимпиадных задачах. Никогда, ни в каких обстоятельствах нельзя применять его вне олимпиад.
+            <br>Метод банально прост: пусть сложность нашего решения
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>O</mi>
+                <mo stretchy="false">(</mo>
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <mi>I</mi>
+                <mi>n</mi>
+                <mi>p</mi>
+                <mi>u</mi>
+                <mi>t</mi>
+                <mo stretchy="false">)</mo>
+                <mo stretchy="false">)</mo>
+            </math>
+            . Посчитаем максимальное значение
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <mi>I</mi>
+                <mi>n</mi>
+                <mi>p</mi>
+                <mi>u</mi>
+                <mi>t</mi>
+                <mo stretchy="false">)</mo>
+            </math>
+            для всех входных данных. Чаще всего оно будет равно значению функции
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>f</mi>
+            </math>
+            для максимальных значений всех её параметров. Пусть ограничение по времени в задаче равно
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>t</mi>
+            </math>
+            секунд. Рассмотрим значение
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mfrac>
+                    <mrow>
+                        <mo movablelimits="true" form="prefix">max</mo>
+                        <mrow class="MJX-TeXAtom-ORD">
+                            <mi>f</mi>
+                        </mrow>
+                    </mrow>
+                    <mi>t</mi>
+                </mfrac>
+            </math>
+            :
+            <br>●Если
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mfrac>
+                        <mrow>
+                            <mo movablelimits="true" form="prefix">max</mo>
+                            <mrow class="MJX-TeXAtom-ORD">
+                                <mi>f</mi>
+                            </mrow>
+                        </mrow>
+                        <mi>t</mi>
+                    </mfrac>
+                </mrow>
+                <mo>&#x2264;<!-- ≤ --></mo>
+                <msup>
+                    <mn>10</mn>
+                    <mn>7</mn>
+                </msup>
+            </math>
+            , то решение почти наверняка уложится в ограничение по времени.
+            <br>●Если
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mfrac>
+                        <mrow>
+                            <mo movablelimits="true" form="prefix">max</mo>
+                            <mrow class="MJX-TeXAtom-ORD">
+                                <mi>f</mi>
+                            </mrow>
+                        </mrow>
+                        <mi>t</mi>
+                    </mfrac>
+                </mrow>
+                <mo>&#x2265;<!-- ≥ --></mo>
+                <msup>
+                    <mn>10</mn>
+                    <mn>9</mn>
+                </msup>
+            </math>
+            , то решение почти наверняка не уложится в ограничение по времени.
+            <br>●Если
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <msup>
+                    <mn>10</mn>
+                    <mn>7</mn>
+                </msup>
+                <mo>&#x2264;<!-- ≤ --></mo>
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mfrac>
+                        <mrow>
+                            <mo movablelimits="true" form="prefix">max</mo>
+                            <mrow class="MJX-TeXAtom-ORD">
+                                <mi>f</mi>
+                            </mrow>
+                        </mrow>
+                        <mi>t</mi>
+                    </mfrac>
+                </mrow>
+                <mo>&#x2264;<!-- ≤ --></mo>
+                <msup>
+                    <mn>10</mn>
+                    <mn>9</mn>
+                </msup>
+            </math>
+            , то точно сказать невозможно: зависит от конкретного алгоритма (константы). Как границу между “скорее подходящими” и “скорее неподходящими” решениями можно принять
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <msup>
+                    <mn>10</mn>
+                    <mn>8</mn>
+                </msup>
+            </math>
+            .
+            <br>Чем сложнее и нестандартнее задача, тем выше вероятность того, что метод может оказаться неточным или вовсе ошибочным. Особенно это касается решений задач, сложность которых сложно точно определить.
+        <p style="font-size: 48px">Ограничение по времени и асимптотическая сложность</p>
+        <p>
+            Кроме времени работы, при решении задач также играет роль количество использованной памяти. Его тоже можно оценивать, используя асимптотические ограничения вида
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>M</mi>
+                <mo stretchy="false">(</mo>
+                <mi>N</mi>
+                <mo stretchy="false">)</mo>
+                <mo>&#x2208;<!-- ∈ --></mo>
+                <mi>O</mi>
+                <mo stretchy="false">(</mo>
+                <mi>N</mi>
+                <mo stretchy="false">)</mo>
+            </math>
+            , однако на практике это используется гораздо реже.
+            <br>Дело в том, что в отличие от времени работы, мы можем достаточно точно предсказать количество использованной памяти, глядя на исходный код решения. Для оценки используемой памяти чаще всего достаточно взглянуть на используемые контейнеры: массивы, вектора, std::set, std::map, и другие. Для каждого контейнера мы можем принять количество используемой им памяти равным
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>N</mi>
+                <mo>&#x2217;<!-- ∗ --></mo>
+                <mo stretchy="false">(</mo>
+                <mi>S</mi>
+                <mo>+</mo>
+                <mi>K</mi>
+                <mo stretchy="false">)</mo>
+            </math>
+            , где
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>N</mi>
+            </math>
+            - максимальное возможное количество элементов контейнера за весь алгоритм,
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>S</mi>
+            </math>
+            - размер одного элемента контейнера (для int - 4 байта, double - 8 байт, и т.д.), а
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>K</mi>
+            </math>
+            - некоторая константа, специфическая для контейнера. Для массивов и векторов можем принять
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>K</mi>
+            </math>
+            равным нулю, а для более сложных структур - не более 32 байт.
+            <br>Чаще всего при решении задач, требующих использования большого количества памяти, близкого к ограничению, подавляющую часть используемой памяти будут занимать именно многомерные массивы/вектора. Хорошим методом при оценке используемой памяти будет отнять около 50 МБ от ограничения, и посчитать, хватает ли оставшейся памяти для основных массивов. Например, при ограничении 256 МБ можно спокойно создавать массивы, в сумме занимающие не более 200 МБ памяти.
+            <br>Разумеется, такой метод применим только тогда, когда зависимость используемой памяти от входных данных тривиальна, и все большие контейнеры глобальны или “почти глобальны” (создаются при любых входных данных). Для более сложных задач нужно сначала проанализировать, какие входные данные будут пессимистичными, то есть приведут к максимальному использованию памяти.
+    </p>
+
+</div>
+
+<div class="site-footer">
+    <a href="https://t.me/high_faev" class="double-border-button">My Telegram</a>
+    <p class = "glow-effect-mini">
+        <span><span>В</span><span>о</span><span>о</span><span>б</span><span>р</span><span>а</span><span>ж</span><span>а</span><span>е</span><span>м</span><span>о</span><span>е</span></span>
+        <span><span>б</span><span>о</span><span>г</span><span>а</span><span>т</span><span>с</span><span>т</span><span>в</span><span>о</span></span> <span><span>з</span><span>н</span><span>а</span><span>н</span><span>и</span><span>я</span></span>
+        <span>—</span> <span><span>г</span><span>л</span><span>а</span><span>в</span><span>н</span><span>а</span><span>я</span></span> <span><span>п</span><span>р</span><span>и</span><span>ч</span><span>и</span><span>н</span><span>а</span></span>
+        <span><span>е</span><span>г</span><span>о</span></span> <span><span>б</span><span>е</span><span>д</span><span>н</span><span>о</span><span>с</span><span>т</span><span>и</span></span></p>
+</div>
+<script src="../jscode.js"></script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>

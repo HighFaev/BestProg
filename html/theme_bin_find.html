@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BestProger</title>
+    <link rel="stylesheet" href="../css/stylies4.css">
+</head>
+<body>
+<div class="site-header">
+    <h1 class="glow-effect"><span>B</span><span>E</span><span>S</span><span>T</span><span>P</span><span>R</span><span>O</span><span>G</span><span>E</span><span>R</span></h1>
+    <a href="../index.html" class="floating-button">Новости</a>
+    <a href="thems.html" class="floating-button">Темы</a>
+    <a href="taska.html" class="floating-button">Архив Задач</a>
+</div>
+<div class="main-site" >
+    <div style="text-align: center"><h1 class="glow-effect"><span>Б</span><span>и</span><span>н</span><span>а</span><span>р</span><span>н</span><span>ы</span><span>й</span><span> </span><span>п</span><span>о</span><span>и</span><span>с</span><span>к</span></h1></div>
+</div>
+
+<div class="wrap">
+    <p style="font-size: 48px">Определение</p>
+    <p>
+        Пусть задана монотонная (возрастающая или убывающая) функция
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        </math>
+        , а также некоторое значение
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>y</mi>
+        </math>
+        . Бинарный, или двоичный, поиск - алгоритм, позволяющий за время
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>O</mi>
+            <mo stretchy="false">(</mo>
+            <mi>log</mi>
+            <mo>&#x2061;<!-- ⁡ --></mo>
+            <mi>N</mi>
+            <mo stretchy="false">)</mo>
+        </math>
+        найти такое значение x, что
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>f</mi>
+            <mo stretchy="false">(</mo>
+            <mi>x</mi>
+            <mo stretchy="false">)</mo>
+            <mo>=</mo>
+            <mi>y</mi>
+        </math>.
+        <br>Часто вместо математической функции <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        </math> бинарный поиск производится на отсортированных по возрастанию или убыванию массивах. Если массив не содержит искомого элемента, алгоритм найдёт ближайший к нему элемент (или, более точно, позицию в массиве, на которую нужно вставить искомый элемент, чтобы сохранить упорядоченность).
+    </p>
+    <p><p style="font-size: 48px">Алгоритм</p>
+    <p>
+        Бинарный поиск - один из самых простых и полезных алгоритмов. Его идея заключается в поддерживании некоторого промежутка значений
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>x</mi>
+        </math>, который точно содержит искомое значение, и постепенном его сужении до одного элемента (в случае поиска по массиву) или допустимой погрешности (в случае поиска по непрерывной функции).
+
+        <br>Предположим, что наша функция возрастает, и текущие границы промежутка, точно содержащего
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>x</mi>
+        </math>, это
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mo stretchy="false">[</mo>
+        <mi>l</mi>
+        <mo>;</mo>
+        <mi>r</mi>
+        <mo stretchy="false">]</mo>
+        </math>
+        . Сужение выполняется следующим образом: возьмём “среднюю” точку в промежутке
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>m</mi>
+            <mo>=</mo>
+            <mfrac>
+                <mrow>
+                    <mi>l</mi>
+                    <mo>+</mo>
+                    <mi>r</mi>
+                </mrow>
+                <mn>2</mn>
+            </mfrac>
+        </math>
+        , и сравним <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>m</mi>
+        <mo stretchy="false">)</mo>
+        </math> с <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>y</mi>
+        </math>:
+        <br>
+        <br>● Если
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>m</mi>
+        <mo stretchy="false">)</mo>
+        <mo>&lt;</mo>
+        <mi>y</mi>
+        </math>, то для всех
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>x</mi>
+        <mo>&lt;</mo>
+        <mi>m</mi>
+        </math>
+        правда, что
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mo>&#x2264;<!-- ≤ --></mo>
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>m</mi>
+        <mo stretchy="false">)</mo>
+        <mo>&lt;</mo>
+        <mi>y</mi>
+        </math>
+        То есть промежуток
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mo stretchy="false">[</mo>
+        <mi>l</mi>
+        <mo>;</mo>
+        <mi>m</mi>
+        <mo stretchy="false">)</mo>
+        </math>
+        нас не интересует:
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>x</mi>
+        </math>
+        точно находится в
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mo stretchy="false">[</mo>
+        <mi>m</mi>
+        <mo>;</mo>
+        <mi>r</mi>
+        <mo stretchy="false">]</mo>
+        </math>
+        .
+        <br>● Если <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>m</mi>
+        <mo stretchy="false">)</mo>
+        <mo>&gt;</mo>
+        <mi>y</mi>
+        </math>
+        , то по такой же логике промежуток
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mo stretchy="false">(</mo>
+            <mi>m</mi>
+            <mo>;</mo>
+            <mi>r</mi>
+            <mo stretchy="false">]</mo>
+        </math>
+        нас не интересует, можем сузить диапазон поиска до
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mo stretchy="false">[</mo>
+            <mi>l</mi>
+            <mo>;</mo>
+            <mi>m</mi>
+            <mo stretchy="false">]</mo>
+        </math>
+        .
+        <br>● Если
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>f</mi>
+            <mo stretchy="false">(</mo>
+            <mi>m</mi>
+            <mo stretchy="false">)</mo>
+            <mo>=</mo>
+            <mi>y</mi>
+        </math>
+        , то мы нашли искомое значение:
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>x</mi>
+            <mo>=</mo>
+            <mi>m</mi>
+        </math>
+        .
+        <br>
+        <br>После каждого шага мы либо находим ответ, либо сужаем диапазон поиска в два раза. В случае поиска по непрерывной функции в какой-то момент длина отрезка
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mo stretchy="false">[</mo>
+            <mi>l</mi>
+            <mo>;</mo>
+            <mi>r</mi>
+            <mo stretchy="false">]</mo>
+        </math>
+        станет меньше допустимой погрешности (например,
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <msup>
+                <mn>10</mn>
+                <mrow class="MJX-TeXAtom-ORD">
+                    <mo>&#x2212;<!-- − --></mo>
+                    <mn>6</mn>
+                </mrow>
+            </msup>
+        </math>
+        ), и любой из концов отрезка можно считать ответом. В случае поиска по массиву (где
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>l</mi>
+        </math>
+        и
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>r</mi>
+        </math>
+        должны быть целыми числами), в какой-то момент станет так, что
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>l</mi>
+            <mo>=</mo>
+            <mi>r</mi>
+            <mo>=</mo>
+            <mi>x</mi>
+        </math>
+        , где
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>x</mi>
+        </math>
+        - индекс элемента
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>y</mi>
+        </math>
+        , если он присутствует в массиве, или позиция в массиве, на которую можно вставить
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>y</mi>
+        </math>
+        , не нарушая порядка сортировки.<br>
+
+        <br>Если функция не возрастает, а убывает, алгоритм выглядит практически так же, но логика при сужениях обратная: если
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>f</mi>
+            <mo stretchy="false">(</mo>
+            <mi>m</mi>
+            <mo stretchy="false">)</mo>
+            <mo>&lt;</mo>
+            <mi>y</mi>
+        </math>
+        , то откидываем правую половину, и наоборот.<br>
+
+        <br>Стоит заметить, что иногда может существовать несколько значений
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>x</mi>
+        </math>
+        , таких что
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>f</mi>
+            <mo stretchy="false">(</mo>
+            <mi>x</mi>
+            <mo stretchy="false">)</mo>
+            <mo>=</mo>
+            <mi>y</mi>
+        </math>
+        . Версия алгоритма, описанная выше, найдёт произвольное из всех допустимых
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>x</mi>
+        </math>
+        . Часто нас интересует наименьшее (или наибольшее) из этих значений. Существует простейшая модификация алгоритма, решающая эту проблему, к которой мы ещё вернёмся позже.<br>
+
+        <p style="font-size: 48px">Сложность алгоритма</p>
+        <p style="font-size: 30px">Реализация для непрерывной функции на C++</p>
+        <p>Для этого примера в качестве функции будем использовать возведение в квадрат:
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <mi>x</mi>
+                <mo stretchy="false">)</mo>
+                <mo>=</mo>
+                <msup>
+                    <mi>x</mi>
+                    <mn>2</mn>
+                </msup>
+            </math>
+            . Нам нужно для заданного
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>y</mi>
+            </math>
+            найти такое
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>x</mi>
+            </math>
+            , что
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <msup>
+                    <mi>x</mi>
+                    <mn>2</mn>
+                </msup>
+                <mo>=</mo>
+                <mi>y</mi>
+            </math>
+            . Можно заметить, что это есть не что иное, как квадратный корень из
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mi>y</mi>
+            </math>
+            .</p>
+
+        <div class="code-box">
+            <code>
+                <pre>
+ <b>1.</b>double binsearch_sqrt(double y) {
+ <b>2.</b>    double l = 0, r = 1e9;      //изначальные границы выбираются исходя из
+ <b>3.</b>                                //ограничений на данные в конкретной задаче
+ <b>4.</b>
+ <b>5.</b>    while (r - l > 1e-6) {      //допустимая погрешность: 10^-6
+ <b>6.</b>        double m = (l + r) / 2;
+ <b>7.</b>        double cur = m * m;
+ <b>8.</b>
+ <b>9.</b>        if (cur < y) {
+ <b>10.</b>            l = m;
+ <b>11.</b>        } else if (cur > y) {
+ <b>12.</b>            r = m;
+ <b>13.</b>        } else {
+ <b>14.</b>            return m;
+ <b>15.</b>        }
+ <b>16.</b>    }
+ <b>17.</b>
+ <b>18.</b>    return l;   //l и r практически равны, поэтому неважно,
+ <b>19.</b>                //что из них считать ответом.
+ <b>20.</b>}
+                </pre>
+            </code>
+        </div>
+    <p style="font-size: 30px">Реализация для отсортированного массива как дискретной функции на C++</p>
+    <p>
+        Самый распространённый пример бинарного поиска по дискретной функции - поиск элемента в отсортированном массиве. Функцию можно записать в виде
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>f</mi>
+            <mo stretchy="false">(</mo>
+            <mi>x</mi>
+            <mo stretchy="false">)</mo>
+            <mo>=</mo>
+            <msub>
+                <mi>a</mi>
+                <mi>x</mi>
+            </msub>
+        </math>
+        , или
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>f</mi>
+            <mo stretchy="false">(</mo>
+            <mi>x</mi>
+            <mo stretchy="false">)</mo>
+            <mo>=</mo>
+            <mi>a</mi>
+            <mo stretchy="false">[</mo>
+            <mi>x</mi>
+            <mo stretchy="false">]</mo>
+        </math>
+        , где
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>a</mi>
+        </math>
+        - отсортированный массив. Другими словами, бинарный поиск по массиву позволяет найти индекс элемента с заданным значением.
+    <div class="code-box">
+        <code>
+                <pre>
+ <b>1.</b>int binsearch_array(vector&lt;int>& a, int val) {
+ <b>2.</b>    int l = 0, r = a.size() - 1;
+ <b>3.</b>
+ <b>4.</b>    while (r > l) {
+ <b>5.</b>        int m = (l + r) / 2;    //целочисленное деление!
+ <b>6.</b>
+ <b>7.</b>        if (a[m] < val) {
+ <b>8.</b>            l = m + 1;
+ <b>9.</b>        } else if (a[m] > val) {
+ <b>10.</b>            r = m - 1;
+ <b>11.</b>        } else {
+ <b>12.</b>            return m;
+ <b>13.</b>        }
+ <b>14.</b>    }
+ <b>15.</b>
+ <b>16.</b>    //l == r == искомый индекс
+ <b>17.</b>
+ <b>18.</b>    //Если искомого элемента не было в массиве,
+ <b>19.</b>    //бинарный поиск найдёт следующий после него элемент.
+ <b>20.</b>    //Чтобы распознать этот случай, мы используем дополнительное сравнение.
+ <b>21.</b>    if (a[l] == val) {
+ <b>22.</b>        return l;
+ <b>23.</b>    } else {
+ <b>24.</b>        return -1;
+ <b>25.</b>    }
+ <b>26.</b>}
+                </pre>
+        </code>
+    </div>
+    <p>
+        С дискретными функциями связано несколько тонких моментов, часто приводящих к ошибкам, вызывающим зацикливание алгоритма. А именно: возможность использования открытых или закрытых границ (включающих или исключающих элементы
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>L</mi>
+        </math>
+        и
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>R</mi>
+        </math>
+        ), и целочисленного деления на два при поиске среднего элемента. Чтобы избежать ошибок, нужно следовать одному простому правилу: новые границы всегда должны включать элемент
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>M</mi>
+            <mo>+</mo>
+            <mn>1</mn>
+        </math>
+        или
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>M</mi>
+            <mo>&#x2212;<!-- − --></mo>
+            <mn>1</mn>
+        </math>
+        , но не включать элемент
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>M</mi>
+        </math>
+        . При выполнении этого условия бинарный поиск будет работать корректно.
+    </p>
+    <p style="font-size: 30px">Реализации бинарного поиска в стандартной библиотеке C++</p>
+    <p>
+        В стандартной библиотеке C++ содержатся две основные функции реализующие бинарный поиск на отсортированном массиве. Их определения:
+        <div class="code-box">
+            <code>
+                <pre>
+ //параметр value должен иметь тип, на который указывают итераторы.
+
+ //возвращает итератор на первый элемент, больший либо равный value
+ iterator std::lower_bound(iterator begin, iterator end, int value);
+
+ //возвращает итератор на первый элемент, строго больший value
+ iterator std::upper_bound(iterator begin, iterator end, int value);
+                </pre>
+            </code>
+        </div>
+    <p>
+        <br>Обе эти функции предполагают, что отрезок
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mo stretchy="false">[</mo>
+        <mi>b</mi>
+        <mi>e</mi>
+        <mi>g</mi>
+        <mi>i</mi>
+        <mi>n</mi>
+        <mo>;</mo>
+        <mi>e</mi>
+        <mi>n</mi>
+        <mi>d</mi>
+        <mo stretchy="false">)</mo>
+        </math> отсортирован по стандартному компаратору, в противном случае их поведение не определено. Для нахождения самого элемента обычно используется функция std::lower_bound. При наличии элемента, она вернёт итератор на него, а при отсутствии - на следующий в порядке сортировки. Если value больше всех элементов промежутка, функция вернёт итератор end.
+
+        <br>Функция std::upper_bound используется в особых ситуациях, когда нужно найти положение первого элемента, больше заданного.
+
+        <br>Возвращаясь к ситуации наличия нескольких искомых элементов в массиве, с помощью этих функций искомый промежуток можно записать следующим образом:
+
+
+    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+        <mo stretchy="false">[</mo>
+        <mi>l</mi>
+        <mi>o</mi>
+        <mi>w</mi>
+        <mi>e</mi>
+        <mi>r</mi>
+        <mi mathvariant="normal">&#x005F;<!-- _ --></mi>
+        <mi>b</mi>
+        <mi>o</mi>
+        <mi>u</mi>
+        <mi>n</mi>
+        <mi>d</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mo>;</mo>
+        <mi>u</mi>
+        <mi>p</mi>
+        <mi>p</mi>
+        <mi>e</mi>
+        <mi>r</mi>
+        <mi mathvariant="normal">&#x005F;<!-- _ --></mi>
+        <mi>b</mi>
+        <mi>o</mi>
+        <mi>u</mi>
+        <mi>n</mi>
+        <mi>d</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mo stretchy="false">)</mo>
+    </math>
+    Для бинарного поиска по массиву, отсортированному по собственному компаратору вы можете воспользоваться расширенной формой функций:
+    <div class="code-box">
+        <pre>
+ iterator lower_bound(iterator begin, iterator end, int value, comparator comp);
+ iterator upper_bound(iterator begin, iterator end, int value, comparator comp);
+        </pre>
+    </div>
+    <p>
+        Вы также можете осуществлять бинарный поиск по библиотечным классам std::set и std::map. Для этого используйте методы классов:
+    <div class="code-box">
+        <pre>
+ set&lt;int> s;
+ // ...
+ set&lt;int>::iterator it = s.lower_bound(k);
+
+ map&lt;int, string> m;
+ // ...
+
+ // бинарный поиск для std::map ведётся по ключам
+ map&lt;int, string>::iterator it = m.lower_bound(k);
+        </pre>
+    </div>
+    <p>
+        Советуем сразу после этой темы ознакомиться с <a href="theme_bin_find_ans.html" style="text-decoration: none">Бинарный поиск по ответу</a>
+    </p>
+</div>
+
+<div class="site-footer">
+    <a href="https://t.me/high_faev" class="double-border-button">My Telegram</a>
+    <p class = "glow-effect-mini">
+        <span><span>В</span><span>о</span><span>о</span><span>б</span><span>р</span><span>а</span><span>ж</span><span>а</span><span>е</span><span>м</span><span>о</span><span>е</span></span>
+        <span><span>б</span><span>о</span><span>г</span><span>а</span><span>т</span><span>с</span><span>т</span><span>в</span><span>о</span></span> <span><span>з</span><span>н</span><span>а</span><span>н</span><span>и</span><span>я</span></span>
+        <span>—</span> <span><span>г</span><span>л</span><span>а</span><span>в</span><span>н</span><span>а</span><span>я</span></span> <span><span>п</span><span>р</span><span>и</span><span>ч</span><span>и</span><span>н</span><span>а</span></span>
+        <span><span>е</span><span>г</span><span>о</span></span> <span><span>б</span><span>е</span><span>д</span><span>н</span><span>о</span><span>с</span><span>т</span><span>и</span></span></p>
+</div>
+<script src="../jscode.js"></script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>
