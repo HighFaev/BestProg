@@ -121,37 +121,6 @@ body{
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
-    font-family: sans-serif;
-    font-size: 24px;
-    font-weight: bold;
-    color: #FFFFFF;
-    text-shadow:
-            -0   -2px 0   #000000,
-            0   -2px 0   #000000,
-            -0    2px 0   #000000,
-            0    2px 0   #000000,
-            -2px -0   0   #000000,
-            2px -0   0   #000000,
-            -2px  0   0   #000000,
-            2px  0   0   #000000,
-            -1px -2px 0   #000000,
-            1px -2px 0   #000000,
-            -1px  2px 0   #000000,
-            1px  2px 0   #000000,
-            -2px -1px 0   #000000,
-            2px -1px 0   #000000,
-            -2px  1px 0   #000000,
-            2px  1px 0   #000000,
-            -2px -2px 0   #000000,
-            2px -2px 0   #000000,
-            -2px  2px 0   #000000,
-            2px  2px 0   #000000,
-            -2px -2px 0   #000000,
-            2px -2px 0   #000000,
-            -2px  2px 0   #000000,
-            2px  2px 0   #000000;
-    max-width: 800px;
-    margin: auto;
 }
 .box-news{
     border: 5px solid;

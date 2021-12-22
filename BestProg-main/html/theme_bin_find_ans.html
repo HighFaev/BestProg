@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BestProger</title>
+    <link rel="stylesheet" href="../css/stylies4.css">
+</head>
+<body>
+<div class="site-header">
+    <h1 class="glow-effect"><span>B</span><span>E</span><span>S</span><span>T</span><span>P</span><span>R</span><span>O</span><span>G</span><span>E</span><span>R</span></h1>
+    <a href="../index.html" class="floating-button">Новости</a>
+    <a href="thems.html" class="floating-button">Темы</a>
+    <a href="taska.html" class="floating-button">Архив Задач</a>
+</div>
+<div class="main-site" >
+    <div style="text-align: center"><h1 class="glow-effect"><span>Б</span><span>и</span><span>н</span><span>а</span><span>р</span><span>н</span><span>ы</span><span>й</span><span> </span><span>п</span><span>о</span><span>и</span><span>с</span><span>к</span><span> </span><span>п</span><span>о</span><span> </span><span>о</span><span>т</span><span>в</span><span>е</span><span>т</span><span>у</span></h1></div>
+</div>
+
+<div class="wrap">
+    <p style="font-size: 48px">Введение</p>
+    <p>
+        Бинарный поиск по ответу - распространённый подход при решении задач. Часто применяется в задачах и подзадачах вида “найдите максимально возможное количество чего-либо при котором выполняются определённые условия”. Бинарный поиск по ответу в таких задачах можно применять, когда выполняются следующие условия:
+        <br><br>●Если возможен ответ
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+        </math>
+        , то гарантированно возможен и ответ
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+            <mo>&#x2212;</mo>
+            <mn>1</mn>
+        </math>
+        .
+        <br>●Если невозможен ответ
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+        </math>
+        , то гарантированно невозможен и ответ
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi>N</mi>
+            <mo>+</mo>
+            <mn>1</mn>
+        </math>
+        .
+        <br><br>В качестве примера рассмотрим следующую задачу: <a href="http://codeforces.com/contest/371/problem/C" style="text-decoration: none">CF 218 Div2 C. Гамбургеры</a>. Параметр, по которому мы выполняем бинарный поиск - количество гамбургеров, которые Поликарп может приготовить. Реализуем соотвествующие функции:
+        <div class="code-box">
+            <code>
+                <pre>
+<b>1.</b> //Считаем, что входные данные уже введены.
+<b>2.</b> long long nb, ns, nc;
+<b>3.</b> long long pb, ps, pc;
+<b>4.</b> long long r;
+<b>5.</b>
+<b>6.</b> //Количество необходимых кусков хлеба, колбасы и сыра для одного гамбургера.
+<b>7.</b> //Рассчитывается из строки рецепта.
+<b>8.</b> long long tb, ts, tc;
+<b>9.</b>
+<b>10.</b>//Возможно ли приготовить h гамбургеров.
+<b>11.</b>bool possible(long long h) {
+<b>12.</b>    long long cost_b = max(0ll, (tb * h - nb) * pb);
+<b>13.</b>    long long cost_s = max(0ll, (ts * h - ns) * ps);
+<b>14.</b>    long long cost_c = max(0ll, (tc * h - nc) * pc);
+<b>15.</b>
+<b>16.</b>    return cost_b + cost_s + cost_c <= r;
+<b>17.</b>}
+<b>18.</b>
+<b>19.</b>//Можно заметить, что это не стандартный бинарный поиск
+<b>20.</b>//по элементу, а поиск первого "невозможного" количества
+<b>21.</b>//гамбургеров (аналог std::upper_bound).
+<b>22.</b>//В реализации таких функций часто допускаются ошибки
+<b>23.</b>//в строках подобных 32 и 34, но они быстро выявляются и
+<b>24.</b>//исправляются тестированием на сэмплах.
+<b>25.</b>long long max_possible() {
+<b>26.</b>    long long l = 0, r = 1e14;
+<b>27.</b>
+<b>28.</b>    while (l < r) {
+<b>29.</b>        long long m = (l + r) / 2;
+<b>30.</b>
+<b>31.</b>        if (possible(m)) {
+<b>32.</b>            l = m + 1;
+<b>33.</b>        } else {
+<b>34.</b>            r = m;
+<b>35.</b>        }
+<b>36.</b>    }
+<b>37.</b>
+<b>38.</b>    return l - 1;   //l == r == первое "невозможное" количество
+<b>39.</b>}
+                </pre>
+            </code>
+        </div>
+    <p>
+        <a href="http://codeforces.com/contest/371/submission/12605708" style="text-decoration: none">Полное решение этой задачи</a>
+    </p>
+
+</div>
+
+<div class="site-footer">
+    <a href="https://t.me/high_faev" class="double-border-button">My Telegram</a>
+    <p class = "glow-effect-mini">
+        <span><span>В</span><span>о</span><span>о</span><span>б</span><span>р</span><span>а</span><span>ж</span><span>а</span><span>е</span><span>м</span><span>о</span><span>е</span></span>
+        <span><span>б</span><span>о</span><span>г</span><span>а</span><span>т</span><span>с</span><span>т</span><span>в</span><span>о</span></span> <span><span>з</span><span>н</span><span>а</span><span>н</span><span>и</span><span>я</span></span>
+        <span>—</span> <span><span>г</span><span>л</span><span>а</span><span>в</span><span>н</span><span>а</span><span>я</span></span> <span><span>п</span><span>р</span><span>и</span><span>ч</span><span>и</span><span>н</span><span>а</span></span>
+        <span><span>е</span><span>г</span><span>о</span></span> <span><span>б</span><span>е</span><span>д</span><span>н</span><span>о</span><span>с</span><span>т</span><span>и</span></span></p>
+</div>
+<script src="../jscode.js"></script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>
